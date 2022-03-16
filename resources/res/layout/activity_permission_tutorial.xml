@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent">
+    <android.support.p010v4.view.ViewPager android:id="@+id/activity_permssion_tutorial_viewpager" android:layout_width="match_parent" android:layout_height="match_parent"/>
+    <LinearLayout android:orientation="horizontal" android:id="@+id/activity_permssion_tutorial_indicator_layout" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="20dp" android:layout_alignParentTop="true" android:layout_centerInParent="true">
+        <ImageView android:id="@+id/activity_permssion_tutorial_indicator_0_imageview" android:background="@drawable/baseline_lens_black_18dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10dp"/>
+        <ImageView android:id="@+id/activity_permssion_tutorial_indicator_1_imageview" android:background="@drawable/outline_lens_black_18dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10dp"/>
+        <ImageView android:id="@+id/activity_permssion_tutorial_indicator_2_imageview" android:background="@drawable/outline_lens_black_18dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10dp"/>
+        <ImageView android:id="@+id/activity_permssion_tutorial_indicator_3_imageview" android:background="@drawable/outline_lens_black_18dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10dp"/>
+        <ImageView android:id="@+id/activity_permssion_tutorial_indicator_4_imageview" android:background="@drawable/outline_lens_black_18dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10dp"/>
+        <ImageView android:id="@+id/activity_permssion_tutorial_indicator_5_imageview" android:background="@drawable/outline_lens_black_18dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10dp"/>
+    </LinearLayout>
+    <Button android:textSize="25sp" android:textColor="#ffffff" android:id="@+id/activity_permssion_tutorial_okay_button" android:background="@color/red_setting" android:padding="20dp" android:visibility="invisible" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="10dp" android:text="Back to HS Instructor 2.0" android:layout_alignParentBottom="true" android:layout_centerInParent="true"/>
+</RelativeLayout>
