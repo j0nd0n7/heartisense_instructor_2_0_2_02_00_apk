@@ -22,14 +22,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+// AQUI SE GESTIONA LA CONEXION BLUETOOTH
+
 /* renamed from: com.imlabworld.HS_Instructor.c */
 class C2528c {
     /* access modifiers changed from: private */
 
     /* renamed from: A */
-    public final Handler f9564A = new Handler() {
+    // https://developer.android.com/reference/android/os/Handler
+    public final Handler messageHandler = new Handler() {
         public void handleMessage(Message message) {
             if (C2528c.this.f9593z != null) {
+                // https://developer.android.com/reference/android/os/Message
                 switch (message.what) {
                     case 2:
                         C2528c.this.f9568a = false;
@@ -55,36 +59,42 @@ class C2528c {
 
     /* renamed from: B */
     private final ServiceConnection f9565B = new ServiceConnection() {
+        // aqui se registra una misma funcion handler para cada servicio
+        // ver: https://www.bluetooth.com/blog/a-developers-guide-to-bluetooth
+        /*
+            Services
+            Is a container for logically related Bluetooth® data items. Those data items are in fact called Characteristics. A Service can be thought of as the owner of the Characteristics inside it. Often a Service represents a particular feature (e.g. a hardware feature) of a device like the buttons or a particular sensor. An example of a Bluetooth SIG defined Service is the Device Information Service which, as the name suggests, is a container for various items of information about the device such as its manufacturer and serial number.
+        */
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             Log.d("BT_ACSUtility", "ACSUtilityService is connected!" + C2528c.this.f9591x);
             if (C2528c.this.f9591x == 0) {
                 BT_ACSUtilityService0 unused = C2528c.this.f9584q = ((BT_ACSUtilityService0.C2266a) iBinder).mo8448a();
                 C2528c.this.f9584q.mo8434b();
-                C2528c.this.f9584q.mo8430a(C2528c.this.f9564A);
+                C2528c.this.f9584q.mo8430a(C2528c.this.messageHandler);
             } else if (C2528c.this.f9591x == 1) {
                 BT_ACSUtilityService1 unused2 = C2528c.this.f9585r = ((BT_ACSUtilityService1.C2268a) iBinder).mo8469a();
                 C2528c.this.f9585r.mo8455b();
-                C2528c.this.f9585r.mo8451a(C2528c.this.f9564A);
+                C2528c.this.f9585r.mo8451a(C2528c.this.messageHandler);
             } else if (C2528c.this.f9591x == 2) {
                 BT_ACSUtilityService2 unused3 = C2528c.this.f9586s = ((BT_ACSUtilityService2.C2270a) iBinder).mo8490a();
                 C2528c.this.f9586s.mo8476b();
-                C2528c.this.f9586s.mo8472a(C2528c.this.f9564A);
+                C2528c.this.f9586s.mo8472a(C2528c.this.messageHandler);
             } else if (C2528c.this.f9591x == 3) {
                 BT_ACSUtilityService3 unused4 = C2528c.this.f9587t = ((BT_ACSUtilityService3.C2272a) iBinder).mo8511a();
                 C2528c.this.f9587t.mo8497b();
-                C2528c.this.f9587t.mo8493a(C2528c.this.f9564A);
+                C2528c.this.f9587t.mo8493a(C2528c.this.messageHandler);
             } else if (C2528c.this.f9591x == 4) {
                 BT_ACSUtilityService4 unused5 = C2528c.this.f9588u = ((BT_ACSUtilityService4.C2274a) iBinder).mo8532a();
                 C2528c.this.f9588u.mo8518b();
-                C2528c.this.f9588u.mo8514a(C2528c.this.f9564A);
+                C2528c.this.f9588u.mo8514a(C2528c.this.messageHandler);
             } else if (C2528c.this.f9591x == 5) {
                 BT_ACSUtilityService5 unused6 = C2528c.this.f9589v = ((BT_ACSUtilityService5.C2276a) iBinder).mo8553a();
                 C2528c.this.f9589v.mo8539b();
-                C2528c.this.f9589v.mo8535a(C2528c.this.f9564A);
+                C2528c.this.f9589v.mo8535a(C2528c.this.messageHandler);
             } else if (C2528c.this.f9591x == 6) {
                 BT_ACSUtilityService_auto unused7 = C2528c.this.f9590w = ((BT_ACSUtilityService_auto.C2278a) iBinder).mo8574a();
                 C2528c.this.f9590w.mo8560b();
-                C2528c.this.f9590w.mo8556a(C2528c.this.f9564A);
+                C2528c.this.f9590w.mo8556a(C2528c.this.messageHandler);
             }
             C2528c.this.f9593z.mo8579a();
         }

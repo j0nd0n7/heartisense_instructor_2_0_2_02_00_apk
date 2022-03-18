@@ -10,7 +10,7 @@ import android.os.Message;
 import android.util.Log;
 import com.imlabworld.HS_Instructor.C2426b;
 import com.imlabworld.HS_Instructor.C2528c;
-import com.imlabworld.p079a.C2570af;
+import com.imlabworld.p079a.SensorPacket;
 import com.imlabworld.p079a.C2572ah;
 import com.imlabworld.p079a.C2577am;
 import com.imlabworld.p079a.C2590az;
@@ -111,13 +111,13 @@ public class C2343ai extends C2341ah {
             return false;
         }
         int size = this.f7928at[i].f7843P.size();
-        byte[] bArr = new byte[size];
+        byte[] binaryData = new byte[size];
         for (int i2 = 0; i2 < size; i2++) {
-            bArr[i2] = this.f7928at[i].f7843P.get(i2).byteValue();
+            binaryData[i2] = this.f7928at[i].f7843P.get(i2).byteValue();
         }
-        byte b = bArr[1];
-        if (size >= 5 && bArr[1] == -120 && bArr[2] == 9 && ((bArr[3] == 0 || bArr[3] == 1) && bArr[4] == 3)) {
-            m13213a(i, m13215a(i, bArr, 5));
+        byte b = binaryData[1];
+        if (size >= 5 && binaryData[1] == -120 && binaryData[2] == 9 && ((binaryData[3] == 0 || binaryData[3] == 1) && binaryData[4] == 3)) {
+            m13213a(i, m13215a(i, binaryData, 5));
             return true;
         } else if (b < 5 || b > 20) {
             this.f7928at[i].f7843P.remove(0);
@@ -125,8 +125,8 @@ public class C2343ai extends C2341ah {
         } else if (b > size) {
             return false;
         } else {
-            if (bArr[b - 1] == 3) {
-                m13213a(i, m13215a(i, bArr, (int) b));
+            if (binaryData[b - 1] == 3) {
+                m13213a(i, m13215a(i, binaryData, (int) b));
                 return true;
             }
             this.f7928at[i].f7843P.remove(0);
@@ -135,81 +135,78 @@ public class C2343ai extends C2341ah {
     }
 
     /* renamed from: a */
-    private void m13212a(int i, int i2, byte[] bArr) {
+    private void m13212a(int i, int i2, byte[] binaryData) {
     }
 
-    /* renamed from: a */
-    private void m13213a(int i, byte[] bArr) {
-        byte b = bArr[2] & 255;
+    private void m13213a(int i, byte[] binaryData) {
+        // AQUI SE GESTIONA EL TIPO DE MENSAJE RECIBIDO
+        byte b = binaryData[2] & 0xFF;
         if (b == 16) {
-            m13217b(i, bArr);
+            processData(i, binaryData);
         } else if (b == 1) {
         } else {
             if (b >= 2 && b <= 6) {
-                m13219c(i, bArr);
+                m13219c(i, binaryData);
             } else if (b == 7) {
             } else {
                 if (b == 8) {
-                    m13223e(i, bArr);
+                    m13223e(i, binaryData);
                 } else if (b == 9) {
-                    m13225f(i, bArr);
+                    m13225f(i, binaryData);
                 } else if (b == 15) {
-                    m13221d(i, bArr);
+                    m13221d(i, binaryData);
                 } else if (b == 17) {
-                    m13212a(i, 0, bArr);
-                    m13227g(i, bArr);
+                    m13212a(i, 0, binaryData);
+                    m13227g(i, binaryData);
                 }
             }
         }
     }
 
     /* renamed from: a */
-    private byte[] m13215a(int i, byte[] bArr, int i2) {
-        byte[] bArr2 = new byte[i2];
+    private byte[] m13215a(int i, byte[] binaryData, int i2) {
+        byte[] binaryData2 = new byte[i2];
         for (int i3 = 0; i3 < i2; i3++) {
             this.f7928at[i].f7843P.remove(0);
-            bArr2[i3] = bArr[i3];
+            binaryData2[i3] = binaryData[i3];
         }
-        return bArr2;
+        return binaryData2;
     }
 
-    /* renamed from: b */
-    private void m13217b(int i, byte[] bArr) {
-        int i2 = ((bArr[3] << 8) & 65280) + (bArr[4] & 255);
-        int i3 = (bArr[6] & 255) + ((bArr[5] << 8) & 65280);
-        int a = mo8930a(i2);
-        int a2 = mo8930a(i3);
-        int max = Math.max(a, a2);
-        double[] dArr = new double[3];
-        double[] dArr2 = new double[3];
-        for (int i4 = 0; i4 < 3; i4++) {
-            dArr[i4] = ((double) bArr[(i4 * 2) + 8]) / 10.0d;
-            dArr2[i4] = ((double) bArr[(i4 * 2) + 9]) / 10.0d;
+    private void processData(int i, byte[] binaryData) {
+        int _forceH = ((binaryData[3] << 8) & 0xFF00) + (binaryData[4] & 0xFF);
+        int _forceS = (binaryData[6] & 0xFF) + ((binaryData[5] << 8) & 0xFF00);
+        int forceH = mo8930a(_forceH); // mo8930a hace un calculo parece ser un remapeo a un rango numerico
+        int forceS = mo8930a(_forceS);
+        int force = Math.max(forceH, forceS);
+        double[] accDepthMin = new double[3];
+        double[] accDepthMax = new double[3];
+        for (int i = 0; i < 3; i++) {
+            accDepthMin[i] = ((double) binaryData[(i * 2) + 8]) / 10.0d;
+            accDepthMax[i] = ((double) binaryData[(i * 2) + 9]) / 10.0d;
         }
-        int i5 = (bArr[18] & 255) + ((bArr[17] << 8) & 65280);
-        byte b = bArr[7] & 255;
-        boolean[] zArr = new boolean[4];
-        if ((b & 16) > 0) {
-            zArr[0] = false;
-        } else {
-            zArr[0] = true;
-        }
-        if ((b & 32) > 0) {
-            zArr[3] = false;
-        } else {
-            zArr[3] = true;
-        }
-        if ((b & 64) > 0) {
-            zArr[2] = false;
-        } else {
-            zArr[2] = true;
-        }
-        if ((b & 128) > 0) {
-            zArr[1] = false;
-        } else {
-            zArr[1] = true;
-        }
-        C2570af afVar = new C2570af(a, a2, max, dArr, dArr2, i5, b, zArr, new byte[]{bArr[14], bArr[15], bArr[16]}, new double[]{0.0d, 0.0d, 0.0d});
+        int atm = (binaryData[18] & 0xFF) + ((binaryData[17] << 8) & 0xFF00);
+        byte posRaw = binaryData[7] & 0xFF;
+
+        boolean[] pos = new boolean[4];
+        pos[0] = (posRaw & 0x10) > 0 ? false : true;
+        pos[3] = (posRaw & 0x20) > 0 ? false : true;
+        pos[2] = (posRaw & 0x40) > 0 ? false : true;
+        pos[1] = (posRaw & 0x80) > 0 ? false : true;
+
+        SensorPacket sensorPacket = new SensorPacket(
+            forceH,
+            forceS,
+            force,
+            accDepthMin,
+            accDepthMax,
+            atm,
+            posRaw,
+            pos,
+            new byte[]{binaryData[14], binaryData[15], binaryData[16]},
+            new double[]{0.0d, 0.0d, 0.0d}
+        );
+
         if (this.f7928at[i].f7875y) {
             switch (this.f7928at[i].f7865o.mo8998d()) {
                 case 0:
@@ -221,17 +218,17 @@ public class C2343ai extends C2341ah {
                     break;
             }
         }
-        this.f7928at[i].f7870t = this.f7928at[i].f7846S.mo10031a(afVar);
+        this.f7928at[i].f7870t = this.f7928at[i].f7846S.mo10031a(sensorPacket);
         this.f7928at[i].f7871u = true;
     }
 
     /* renamed from: c */
-    private void m13219c(int i, byte[] bArr) {
+    private void m13219c(int i, byte[] binaryData) {
         if (C2557y.f9848t[i] != null) {
             C2557y.f9848t[i].mo10022c();
         }
-        byte b = bArr[2] & 255;
-        byte b2 = bArr[3] & 255;
+        byte b = binaryData[2] & 255;
+        byte b2 = binaryData[3] & 255;
         switch (b) {
             case 3:
                 this.f7928at[i].f7829B = b2;
@@ -244,7 +241,7 @@ public class C2343ai extends C2341ah {
             case 6:
                 if (this.f7928at[i].f7876z) {
                     this.f7928at[i].f7846S = new C2621y(new C2597e(C2590az.ADJUST_ZERO, 1, C2557y.f9832d.f9755k, C2557y.f9832d.f9747c, C2557y.f9832d.f9751g, C2557y.f9832d.f9752h, C2557y.f9832d.f9753i), 0, C2556x.f9799p[i], 0, C2556x.f9800q[i]);
-                    m13212a(i, 0, bArr);
+                    m13212a(i, 0, binaryData);
                     if (b2 == 0) {
                         this.f7928at[i].f7832E = 0;
                         mo8712g(i, 12);
@@ -269,11 +266,11 @@ public class C2343ai extends C2341ah {
     }
 
     /* renamed from: d */
-    private void m13221d(int i, byte[] bArr) {
+    private void m13221d(int i, byte[] binaryData) {
         if (C2557y.f9848t[i] != null) {
             C2557y.f9848t[i].mo10022c();
         }
-        byte b = bArr[3] & 255;
+        byte b = binaryData[3] & 255;
         if (b == 2 || b == 3 || b == 4 || b == 5) {
             this.f7928at[i].f7844Q = b;
             mo8710a(i, C2426b.C2428a.LABEL_CHECK_CODE);
@@ -283,11 +280,11 @@ public class C2343ai extends C2341ah {
     }
 
     /* renamed from: e */
-    private void m13223e(int i, byte[] bArr) {
+    private void m13223e(int i, byte[] binaryData) {
         if (C2557y.f9848t[i] != null) {
             C2557y.f9848t[i].mo10022c();
         }
-        if ((bArr[3] & 255) == 0) {
+        if ((binaryData[3] & 255) == 0) {
             mo8710a(i, C2426b.C2428a.ACCEL_CODE);
         } else {
             m13233y(i);
@@ -295,19 +292,19 @@ public class C2343ai extends C2341ah {
     }
 
     /* renamed from: f */
-    private void m13225f(int i, byte[] bArr) {
+    private void m13225f(int i, byte[] binaryData) {
         if (C2557y.f9848t[i] != null) {
             C2557y.f9848t[i].mo10022c();
         }
     }
 
     /* renamed from: g */
-    private void m13227g(int i, byte[] bArr) {
+    private void m13227g(int i, byte[] binaryData) {
         if (!this.f7923ao) {
             if (C2557y.f9849u[i] != null) {
                 C2557y.f9849u[i].mo10022c();
             }
-            switch (bArr[4] & 255) {
+            switch (binaryData[4] & 255) {
                 case 1:
                     this.f7928at[i].f7832E = 0;
                     mo8631k(i);
@@ -344,22 +341,22 @@ public class C2343ai extends C2341ah {
     /* access modifiers changed from: private */
     /* renamed from: j */
     public void mo8628j(int i) {
-        byte[] bArr = new byte[11];
-        bArr[0] = 2;
-        bArr[1] = 11;
-        bArr[2] = 17;
-        bArr[3] = 1;
-        bArr[4] = (byte) (C2557y.f9832d.f9750f + 1);
-        bArr[5] = (byte) C2557y.f9832d.f9751g;
-        bArr[6] = (byte) C2557y.f9832d.f9752h;
-        bArr[7] = (byte) C2557y.f9832d.f9753i;
-        bArr[8] = (byte) C2557y.f9832d.f9755k;
+        byte[] binaryData = new byte[11];
+        binaryData[0] = 2;
+        binaryData[1] = 11;
+        binaryData[2] = 17;
+        binaryData[3] = 1;
+        binaryData[4] = (byte) (C2557y.f9832d.f9750f + 1);
+        binaryData[5] = (byte) C2557y.f9832d.f9751g;
+        binaryData[6] = (byte) C2557y.f9832d.f9752h;
+        binaryData[7] = (byte) C2557y.f9832d.f9753i;
+        binaryData[8] = (byte) C2557y.f9832d.f9755k;
         if (C2557y.f9832d.f9756l == 0) {
             C2557y.f9832d.f9756l = 1;
         }
-        bArr[9] = (byte) C2557y.f9832d.f9756l;
-        bArr[10] = 3;
-        this.f7928at[i].f7851a.mo9318a(bArr);
+        binaryData[9] = (byte) C2557y.f9832d.f9756l;
+        binaryData[10] = 3;
+        this.f7928at[i].f7851a.mo9318a(binaryData);
         this.f7928at[i].f7840M = 1;
         if (C2557y.f9849u[i] != null) {
             C2557y.f9849u[i].mo10021b();
@@ -369,9 +366,9 @@ public class C2343ai extends C2341ah {
     /* access modifiers changed from: private */
     /* renamed from: k */
     public void mo8631k(int i) {
-        byte[] bArr = {2, 10, 17, 2, 1, 1, 1, 1, 1, 3};
-        this.f7928at[i].f7851a.mo9318a(bArr);
-        m13212a(i, 1, bArr);
+        byte[] binaryData = {2, 10, 17, 2, 1, 1, 1, 1, 1, 3};
+        this.f7928at[i].f7851a.mo9318a(binaryData);
+        m13212a(i, 1, binaryData);
         this.f7928at[i].f7840M = 2;
         if (C2557y.f9849u[i] != null) {
             C2557y.f9849u[i].mo10021b();
@@ -381,9 +378,9 @@ public class C2343ai extends C2341ah {
     /* access modifiers changed from: private */
     /* renamed from: v */
     public void m13230v(int i) {
-        byte[] bArr = {2, 10, 17, 3, (byte) C2557y.f9832d.f9745a, (byte) C2557y.f9832d.f9746b, (byte) C2557y.f9832d.f9747c, (byte) C2557y.f9832d.f9748d, (byte) C2557y.f9832d.f9749e, 3};
-        this.f7928at[i].f7851a.mo9318a(bArr);
-        m13212a(i, 1, bArr);
+        byte[] binaryData = {2, 10, 17, 3, (byte) C2557y.f9832d.f9745a, (byte) C2557y.f9832d.f9746b, (byte) C2557y.f9832d.f9747c, (byte) C2557y.f9832d.f9748d, (byte) C2557y.f9832d.f9749e, 3};
+        this.f7928at[i].f7851a.mo9318a(binaryData);
+        m13212a(i, 1, binaryData);
         this.f7928at[i].f7840M = 3;
         if (C2557y.f9849u[i] != null) {
             C2557y.f9849u[i].mo10021b();
@@ -394,22 +391,22 @@ public class C2343ai extends C2341ah {
     /* renamed from: w */
     public void m13231w(int i) {
         int i2 = 20;
-        byte[] bArr = new byte[8];
+        byte[] binaryData = new byte[8];
         int i3 = (this.f7928at[i].f7848U.f9714a < 0 || this.f7928at[i].f7848U.f9714a > 100) ? 20 : this.f7928at[i].f7848U.f9714a;
         int i4 = (this.f7928at[i].f7848U.f9715b < 0 || this.f7928at[i].f7848U.f9715b > 100) ? 20 : this.f7928at[i].f7848U.f9715b;
         if (this.f7928at[i].f7848U.f9716c >= 0 && this.f7928at[i].f7848U.f9716c <= 100) {
             i2 = this.f7928at[i].f7848U.f9716c;
         }
-        bArr[0] = 2;
-        bArr[1] = 8;
-        bArr[2] = 17;
-        bArr[3] = 4;
-        bArr[4] = (byte) (i3 + 1);
-        bArr[5] = (byte) (i4 + 1);
-        bArr[6] = (byte) (i2 + 1);
-        bArr[7] = 3;
-        this.f7928at[i].f7851a.mo9318a(bArr);
-        m13212a(i, 1, bArr);
+        binaryData[0] = 2;
+        binaryData[1] = 8;
+        binaryData[2] = 17;
+        binaryData[3] = 4;
+        binaryData[4] = (byte) (i3 + 1);
+        binaryData[5] = (byte) (i4 + 1);
+        binaryData[6] = (byte) (i2 + 1);
+        binaryData[7] = 3;
+        this.f7928at[i].f7851a.mo9318a(binaryData);
+        m13212a(i, 1, binaryData);
         this.f7928at[i].f7840M = 4;
         if (C2557y.f9849u[i] != null) {
             C2557y.f9849u[i].mo10021b();
@@ -773,9 +770,9 @@ public class C2343ai extends C2341ah {
                 }
                 return;
             case D_VALUE_EDIT:
-                byte[] bArr = {2, 7, 10, 1, 3, -44, 3};
-                bArr[6] = 3;
-                this.f7928at[i].f7851a.mo9318a(bArr);
+                byte[] binaryData = {2, 7, 10, 1, 3, -44, 3};
+                binaryData[6] = 3;
+                this.f7928at[i].f7851a.mo9318a(binaryData);
                 return;
             default:
                 return;
@@ -967,10 +964,10 @@ public class C2343ai extends C2341ah {
             }
 
             /* renamed from: a */
-            public void mo8582a(C2528c.C2534b bVar, byte[] bArr) {
-                if (bArr != null) {
+            public void mo8582a(C2528c.C2534b bVar, byte[] binaryData) {
+                if (binaryData != null) {
                     try {
-                        for (byte valueOf : bArr) {
+                        for (byte valueOf : binaryData) {
                             C2343ai.this.f7928at[i].f7843P.add(Byte.valueOf(valueOf));
                         }
                         boolean z = true;

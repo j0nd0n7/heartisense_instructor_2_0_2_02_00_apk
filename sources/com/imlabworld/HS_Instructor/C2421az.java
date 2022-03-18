@@ -355,7 +355,7 @@ public class C2421az extends Fragment implements View.OnClickListener {
                         JSONObject jSONObject2 = new JSONObject();
                         jSONObject2.put("overall", m13423a(q.mo9640c() * 100.0d, 1));
                         jSONObject2.put("comp", m13423a(q.mo9642d() * 100.0d, 1));
-                        jSONObject2.put("breath", m13423a(q.mo9644e() * 100.0d, 1));
+                        jSONObject2.put("breath", m13423a(q.getBreath() * 100.0d, 1));
                         jSONObject2.put("fraction", m13423a(q.mo9646f() * 100.0d, 1));
                         jSONObject2.put("comp_depth", m13423a(q.mo9648g() * 100.0d, 1));
                         jSONObject2.put("comp_rate", m13423a(q.mo9650h() * 100.0d, 1));
@@ -421,7 +421,7 @@ public class C2421az extends Fragment implements View.OnClickListener {
                                 JSONObject jSONObject5 = new JSONObject();
                                 jSONObject5.put("overall", m13423a(q2.mo9640c() * 100.0d, 1));
                                 jSONObject5.put("comp", m13423a(q2.mo9642d() * 100.0d, 1));
-                                jSONObject5.put("breath", m13423a(q2.mo9644e() * 100.0d, 1));
+                                jSONObject5.put("breath", m13423a(q2.getBreath() * 100.0d, 1));
                                 jSONObject5.put("fraction", m13423a(q2.mo9646f() * 100.0d, 1));
                                 jSONObject5.put("comp_depth", m13423a(q2.mo9648g() * 100.0d, 1));
                                 jSONObject5.put("comp_rate", m13423a(q2.mo9650h() * 100.0d, 1));
