@@ -2360,7 +2360,7 @@ public class C2515br extends Fragment implements View.OnClickListener, AdapterVi
                 }
                 this.f9538g.setText(C2557y.f9835g.f10569hz);
                 int round2 = (int) Math.round(q.mo9642d() * 100.0d);
-                int round3 = (int) Math.round(q.mo9644e() * 100.0d);
+                int round3 = (int) Math.round(q.getBreath() * 100.0d);
                 int round4 = (int) Math.round(q.mo9646f() * 100.0d);
                 this.f9539h.setText(C2557y.f9835g.f10147U);
                 this.f9541j.setText(C2557y.f9835g.f10541hQ);

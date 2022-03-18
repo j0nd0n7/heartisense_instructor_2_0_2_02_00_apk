@@ -445,7 +445,7 @@ class C2548p extends SQLiteOpenHelper {
         contentValues.put("data_idx", Integer.valueOf(rVar.mo9637b()));
         contentValues.put("overall", Double.valueOf(rVar.mo9640c()));
         contentValues.put("comp", Double.valueOf(rVar.mo9642d()));
-        contentValues.put("breath", Double.valueOf(rVar.mo9644e()));
+        contentValues.put("breath", Double.valueOf(rVar.getBreath()));
         contentValues.put("fraction", Double.valueOf(rVar.mo9646f()));
         contentValues.put("comp_depth", Double.valueOf(rVar.mo9648g()));
         contentValues.put("comp_rate", Double.valueOf(rVar.mo9650h()));

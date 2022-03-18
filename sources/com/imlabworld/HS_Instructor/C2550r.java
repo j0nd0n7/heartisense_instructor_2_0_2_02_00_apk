@@ -16,7 +16,7 @@ public class C2550r {
     private double f9728d;
 
     /* renamed from: e */
-    private double f9729e;
+    private double breath;
 
     /* renamed from: f */
     private double f9730f;
@@ -43,7 +43,7 @@ public class C2550r {
         this.f9726b = i;
         this.f9727c = d;
         this.f9728d = d2;
-        this.f9729e = d3;
+        this.breath = d3;
         this.f9730f = d4;
         this.f9731g = d5;
         this.f9732h = d6;
@@ -58,7 +58,7 @@ public class C2550r {
         this.f9726b = i2;
         this.f9727c = d;
         this.f9728d = d2;
-        this.f9729e = d3;
+        this.breath = d3;
         this.f9730f = d4;
         this.f9731g = d5;
         this.f9732h = d6;
@@ -104,8 +104,8 @@ public class C2550r {
     }
 
     /* renamed from: c */
-    public void mo9641c(double d) {
-        this.f9729e = d;
+    public void setBreath(double d) {
+        this.breath = d;
     }
 
     /* renamed from: d */
@@ -119,8 +119,8 @@ public class C2550r {
     }
 
     /* renamed from: e */
-    public double mo9644e() {
-        return this.f9729e;
+    public double getBreath() {
+        return this.breath;
     }
 
     /* renamed from: e */
@@ -189,6 +189,6 @@ public class C2550r {
     }
 
     public String toString() {
-        return String.format("idx:%d dataIdx:%d overall:%f comp:%f breath:%f fraction:%f compDepth:%f compRate:%f compRecoil:%f compPos:%f breathVol:%f breathRate:%f", new Object[]{Integer.valueOf(this.f9725a), Integer.valueOf(this.f9726b), Double.valueOf(this.f9727c), Double.valueOf(this.f9728d), Double.valueOf(this.f9729e), Double.valueOf(this.f9730f), Double.valueOf(this.f9731g), Double.valueOf(this.f9732h), Double.valueOf(this.f9733i), Double.valueOf(this.f9734j), Double.valueOf(this.f9735k), Double.valueOf(this.f9736l)});
+        return String.format("idx:%d dataIdx:%d overall:%f comp:%f breath:%f fraction:%f compDepth:%f compRate:%f compRecoil:%f compPos:%f breathVol:%f breathRate:%f", new Object[]{Integer.valueOf(this.f9725a), Integer.valueOf(this.f9726b), Double.valueOf(this.f9727c), Double.valueOf(this.f9728d), Double.valueOf(this.breath), Double.valueOf(this.f9730f), Double.valueOf(this.f9731g), Double.valueOf(this.f9732h), Double.valueOf(this.f9733i), Double.valueOf(this.f9734j), Double.valueOf(this.f9735k), Double.valueOf(this.f9736l)});
     }
 }

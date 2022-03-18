@@ -19,7 +19,6 @@ public class C2621y extends C2623z {
         this.f9951K = new C2620x(this.f9962z, this.f9941A, this.f9945E, this.f9946F);
     }
 
-    /* renamed from: a */
     private void m14589a(int i, int i2, boolean z, double[] dArr) {
         int d = this.f9949I.f10737R.mo9977d();
         int a = this.f9949I.f10739a.mo9979a();
@@ -123,20 +122,19 @@ public class C2621y extends C2623z {
         }
     }
 
-    /* renamed from: b */
-    private C2571ag m14590b(C2570af afVar) {
-        int c = afVar.mo9839c();
-        int a = mo9796a(afVar.mo9839c(), this.f9962z, this.f9941A, this.f9944D);
-        int a2 = mo9796a(afVar.mo9831a(), this.f9962z, this.f9941A, this.f9944D);
-        int a3 = mo9796a(afVar.mo9836b(), this.f9962z, this.f9941A, this.f9944D);
+    private C2571ag m14590b(SensorPacket sensorPacket) {
+        int c = sensorPacket.getForce();
+        int a = mo9796a(sensorPacket.getForce(), this.f9962z, this.f9941A, this.f9944D);
+        int a2 = mo9796a(sensorPacket.getForceH(), this.f9962z, this.f9941A, this.f9944D);
+        int a3 = mo9796a(sensorPacket.getForceS(), this.f9962z, this.f9941A, this.f9944D);
         int a4 = mo9795a(a, 10, 100);
         int a5 = mo9795a(a2, 10, 100);
         int a6 = mo9795a(a3, 10, 100);
-        boolean[] h = afVar.mo9848h();
-        int g = afVar.mo9847g();
-        double[] d = afVar.mo9843d();
-        double[] e = afVar.mo9845e();
-        int a7 = mo9795a(mo9796a(afVar.mo9846f(), this.f9945E, this.f9946F, 1.0d), 10, 100);
+        boolean[] h = sensorPacket.getPos();
+        int g = sensorPacket.getPosRaw();
+        double[] d = sensorPacket.getAccDepthMin();
+        double[] e = sensorPacket.getAccDepthMax();
+        int a7 = mo9795a(mo9796a(sensorPacket.getAtm(), this.f9945E, this.f9946F, 1.0d), 10, 100);
         m14589a(a4, a7, g < 240, e);
         switch (this.f9961y) {
             case COMPRESSION:
@@ -175,10 +173,10 @@ public class C2621y extends C2623z {
     }
 
     /* renamed from: c */
-    private C2571ag m14591c(C2570af afVar) {
+    private C2571ag m14591c(SensorPacket sensorPacket) {
         C2571ag agVar = new C2571ag(C2593ba.NORMAL);
-        int c = afVar.mo9839c();
-        int f = afVar.mo9846f();
+        int c = sensorPacket.getForce();
+        int f = sensorPacket.getAtm();
         switch (this.f9961y) {
             case ADJUSTING_ZERO:
                 if (this.f9950J.f10714a < 10) {
@@ -224,13 +222,13 @@ public class C2621y extends C2623z {
     }
 
     /* renamed from: d */
-    private C2571ag m14592d(C2570af afVar) {
+    private C2571ag m14592d(SensorPacket sensorPacket) {
         C2571ag agVar = new C2571ag(C2593ba.NORMAL);
-        int c = afVar.mo9839c();
-        int a = mo9795a(mo9796a(afVar.mo9839c(), this.f9962z, this.f9941A, this.f9944D), 10, 100);
-        double[] d = afVar.mo9843d();
-        double[] e = afVar.mo9845e();
-        int f = afVar.mo9846f();
+        int c = sensorPacket.getForce();
+        int a = mo9795a(mo9796a(sensorPacket.getForce(), this.f9962z, this.f9941A, this.f9944D), 10, 100);
+        double[] d = sensorPacket.getAccDepthMin();
+        double[] e = sensorPacket.getAccDepthMax();
+        int f = sensorPacket.getAtm();
         int a2 = mo9795a(mo9796a(f, this.f9945E, this.f9946F, 1.0d), 10, 100);
         switch (this.f9961y) {
             case CALIBRATION_COMPRESSION:
@@ -247,12 +245,12 @@ public class C2621y extends C2623z {
     }
 
     /* renamed from: a */
-    public C2588ax mo10031a(C2570af afVar) {
+    public C2588ax mo10031a(SensorPacket sensorPacket) {
         C2571ag c;
-        if (!mo9798a(afVar.mo9849i())) {
+        if (!mo9798a(sensorPacket.getAccRaw())) {
             this.f9958R = new C2577am(C2593ba.ERROR, C2588ax.CP_DISCONNECT);
             return C2588ax.CP_DISCONNECT;
-        } else if (!mo9800d(afVar.mo9846f())) {
+        } else if (!mo9800d(sensorPacket.getAtm())) {
             this.f9958R = new C2577am(C2593ba.ERROR, C2588ax.BM_DISCONNECT);
             return C2588ax.BM_DISCONNECT;
         } else {
@@ -265,7 +263,7 @@ public class C2621y extends C2623z {
                     case COMPRESSION_INFINITE:
                     case ALL_FINITE:
                     case ALL_INFINITE:
-                        C2571ag b = m14590b(afVar);
+                        C2571ag b = m14590b(sensorPacket);
                         switch (b.mo9852a()) {
                             case COMPRESSION:
                                 this.f9954N = (C2576al) b;
@@ -278,10 +276,10 @@ public class C2621y extends C2623z {
                                 break;
                         }
                     case CALIBRATION:
-                        this.f9956P = (C2575ak) m14592d(afVar);
+                        this.f9956P = (C2575ak) m14592d(sensorPacket);
                         break;
                     case ADJUST_ZERO:
-                        switch (m14591c(afVar).mo9852a()) {
+                        switch (m14591c(sensorPacket).mo9852a()) {
                             case ADJUST_ZERO:
                                 this.f9957Q = (C2572ah) c;
                                 break;

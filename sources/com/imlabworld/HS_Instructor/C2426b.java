@@ -170,8 +170,8 @@ public class C2426b extends Activity {
 
     /* access modifiers changed from: package-private */
     /* renamed from: a */
-    public int mo8930a(int i) {
-        return (int) Math.exp(3.18322799547958d + (0.00153868372576938d * ((double) i)) + (((double) (i * i)) * 1.54167937766884E-7d));
+    public int mo8930a(int num) {
+        return (int) Math.exp(3.18322799547958d + (0.00153868372576938d * ((double) num)) + (((double) (num * num)) * 1.54167937766884E-7d));
     }
 
     /* access modifiers changed from: package-private */
